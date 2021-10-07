@@ -34,12 +34,13 @@ function getRandomArrayElement(array) {
 //Функция удаляет несколько случайное количество случайных элементов массива
 function randomTrimArray (array) {
   const numberOfElementsToDelete = generatedRandomIntInRange(0, array.length - 1);
-  const result = array;
+  const result = array.slice();
   for (let i = 0; i < numberOfElementsToDelete; i++) {
     const elementNumberToSplice =  generatedRandomIntInRange(0, result.length - 1);
     result.splice(elementNumberToSplice,1);
   }
 
+  //console.log(result)
   return result;
 }
 
@@ -166,27 +167,44 @@ function newOffer(titleString, addressValue, priceValue, typeValue, roomsValue,
 }
 
 //генерирует случайный объект 'Offer'
-function generateRandomOffer(titleArray, pricesArray, typesArray, featuresArray, descriptionsArray, photosArray){
-  const title = getRandomArrayElement(titleArray);
-  const addres = `${+generateRandomLocation().lat} ${generateRandomLocation().lng}`;
-  const price = getRandomArrayElement(pricesArray);
-  const type = getRandomArrayElement(typesArray);
-  const rooms = generatedRandomIntInRange(1, 4);
-  const guests = generatedRandomIntInRange(1, 6);
-  const checkin = getRandomArrayElement(checkinsAndCheckouts);
-  const checkout = getRandomArrayElement(checkinsAndCheckouts);
-  const feature = randomTrimArray(featuresArray);
-  const description = getRandomArrayElement(descriptionsArray);
-  const photo = getRandomArrayElement(photosArray);
+function generateRandomOffer(offerObject){
+  const location = generateRandomLocation();
+  offerObject.title = getRandomArrayElement(titles);
+  offerObject.addres = `${+location.lat} ${location.lng}`;
+  offerObject.price = getRandomArrayElement(prices);
+  offerObject.type = getRandomArrayElement(types);
+  offerObject.rooms = generatedRandomIntInRange(1, 4);
+  offerObject.guests = generatedRandomIntInRange(1, 6);
+  offerObject.checkin = getRandomArrayElement(checkinsAndCheckouts);
+  offerObject.checkout = getRandomArrayElement(checkinsAndCheckouts);
+  offerObject.features = randomTrimArray(features);
+  offerObject.description = getRandomArrayElement(descriptions);
+  offerObject.photo = randomTrimArray(photos);
+  offerObject.location = location;
 
-  return newOffer(title, addres, price, type, rooms, guests, checkin, checkout,
-    feature, description, photo);
+  return offerObject;
 }
 
+function getRandomOffer(num) {
+  const arrayOfOffers = [];
+  let i = 0;
+  while(i < num) {
+    arrayOfOffers.push(generateRandomOffer({}));
+    i+=1;
+  }
 
+  return arrayOfOffers;
+}
+// eslint-disable-next-line no-console
+console.log(getRandomOffer(10));
 // eslint-disable-next-line no-console
 console.log(generateRandomLocation ());
 // eslint-disable-next-line no-console
 console.log(generateRandomAuthor(avatars));
 // eslint-disable-next-line no-console
-console.log(generateRandomOffer(titles, prices, types, features, descriptions, photos));
+const offerObj = {
+};
+// eslint-disable-next-line no-console
+console.log(generateRandomOffer(offerObj));
+
+
