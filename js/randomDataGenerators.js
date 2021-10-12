@@ -117,42 +117,27 @@ function generateRandomAuthor(avatarArray) {
   return newAuthor(getRandomArrayElement(avatarArray));
 }
 
-//конструктор объекта Offer
-function newOffer(titleString, addressValue, priceValue, typeValue, roomsValue,
-  guestsValue, checkinValue, checkoutValue, featuresValue, descriptionValue, photosValue) {
-  const offer = {
-    title: titleString,
-    adress: addressValue,
-    price: priceValue,
-    type: typeValue,
-    rooms: roomsValue,
-    guests: guestsValue,
-    checkin: checkinValue,
-    checkout: checkoutValue,
-    features: featuresValue,
-    description: descriptionValue,
-    photos: photosValue,
-  };
-
-  return offer;
-}
-
 //генерирует случайный объект 'Offer'
-function generateRandomOffer(offerObject){
+function generateRandomOffer(offerBody){
   const location = generateRandomLocation();
-  offerObject.title = getRandomArrayElement(titles);
-  offerObject.addres = `${+location.lat} ${location.lng}`;
-  offerObject.price = getRandomArrayElement(prices);
-  offerObject.type = getRandomArrayElement(types);
-  offerObject.rooms = generatedRandomIntInRange(1, 4);
-  offerObject.guests = generatedRandomIntInRange(1, 6);
-  offerObject.checkin = getRandomArrayElement(checkinsAndCheckouts);
-  offerObject.checkout = getRandomArrayElement(checkinsAndCheckouts);
-  offerObject.features = randomTrimArray(features);
-  offerObject.description = getRandomArrayElement(descriptions);
-  offerObject.photo = randomTrimArray(photos);
-  offerObject.location = location;
+  offerBody.title = getRandomArrayElement(titles);
+  offerBody.addres = `${+location.lat} ${location.lng}`;
+  offerBody.price = getRandomArrayElement(prices);
+  offerBody.type = getRandomArrayElement(types);
+  offerBody.rooms = generatedRandomIntInRange(1, 4);
+  offerBody.guests = generatedRandomIntInRange(1, 6);
+  offerBody.checkin = getRandomArrayElement(checkinsAndCheckouts);
+  offerBody.checkout = getRandomArrayElement(checkinsAndCheckouts);
+  offerBody.features = randomTrimArray(features);
+  offerBody.description = getRandomArrayElement(descriptions);
+  offerBody.photo = randomTrimArray(photos);
+  //offerBody.location = location;
 
+  const offerObject = {
+    author: generateRandomAuthor(avatars),
+    offer: offerBody,
+    location: location,
+  };
   return offerObject;
 }
 
