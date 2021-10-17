@@ -45,6 +45,7 @@ const prices = [
   25000 ,
   45000 ,
   60000 ,
+  '',
 ];
 
 const types = [
@@ -62,9 +63,10 @@ const checkinsAndCheckouts = [
 ];
 
 const descriptions = [
-  'Вонючий, но зато дешево' ,
+  'Не самый лучший район, зато дешево' ,
   'Дворец с евроремонтом' ,
   'Обычная светлая квартира с тремя ваннами. Можно с собаками' ,
+  '',
 ];
 
 const photos = [
@@ -141,6 +143,8 @@ function generateRandomOffer(offerBody){
   return offerObject;
 }
 
+
+//Функия принимает на вход число и возвращает массив из num-объектов
 export function getRandomOffer(num) {
   const arrayOfOffers = [];
   let i = 0;
