@@ -1,5 +1,5 @@
-import {getRandomOffer} from './randomDataGenerators.js';
+import {generateRandomOfferCard} from './layoutGenerator.js';
 
-// eslint-disable-next-line no-console
-console.log(getRandomOffer(10));
 
+const promo = document.querySelector('#map-canvas');
+promo.appendChild(generateRandomOfferCard());
