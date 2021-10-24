@@ -39,7 +39,8 @@ export function generateRandomOfferCard() {
   const featuresDisplayStyle = features[0].style.display;
   features.forEach(function (element) {element.style.display = 'none';});
   for (let i = 0; i < randomElement.offer.features.length; i++) {
-    randomCard.querySelector(`.popup__feature--${  randomElement.offer.features[i]}`).style.display = featuresDisplayStyle;
+    const concat = `.popup__feature--${  randomElement.offer.features[i]}`;
+    randomCard.querySelector(concat).style.display = featuresDisplayStyle;
   }
   if (randomElement.offer.description) {
     randomCard.querySelector('.popup__description').textContent = randomElement.offer.description;
