@@ -37,9 +37,9 @@ export function generateRandomOfferCard() {
   randomCard.querySelector('.popup__text--time').textContent = `Заезд после ${randomElement.offer.checkin}, выезд до ${randomElement.offer.checkout}` ;
   const features = randomCard.querySelectorAll('.popup__feature');
   const featuresDisplayStyle = features[0].style.display;
-  features.forEach(element => element.style.display = 'none');
+  features.forEach(function (element) {element.style.display = 'none';});
   for (let i = 0; i < randomElement.offer.features.length; i++) {
-    randomCard.querySelector('.popup__feature--' + randomElement.offer.features[i]).style.display = featuresDisplayStyle;
+    randomCard.querySelector(`.popup__feature--${  randomElement.offer.features[i]}`).style.display = featuresDisplayStyle;
   }
   if (randomElement.offer.description) {
     randomCard.querySelector('.popup__description').textContent = randomElement.offer.description;
