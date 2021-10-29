@@ -4,30 +4,29 @@ const mapFilters = document.querySelector('.map__filters');
 const fieldsets = adForm.querySelectorAll('fieldset');
 const select = mapFilters.querySelectorAll('select');
 
-//const titleFormName = document.getElementById('title');
-//console.log(titleFormName);
-//titleFormName.addEventListener('invalid', () => {
-
-//if (titleFormName.validity.tooShort) {
-// titleFormName.setCustomValidity('Заголовок должен содержать минимум 40 символов');
-//} else if (titleFormName.validity.tooLong) {
-//  titleFormName.setCustomValidity('Заголовок должен содержать макcимум 100 символов');
-//} else if (titleFormName.validity.valueMissing) {
-//  titleFormName.setCustomValidity('Обязательное поле');
-//} else {
-//  titleFormName.setCustomValidity('');
-//}
-//});
-
 export function validateForm() {
   const submit = document.querySelector('.ad-form');
   const price = submit.querySelector('#price');
   const title = submit.querySelector('#title');
+  const roomNumber = submit.querySelector('#room_number');
+
+  validatedCapacity();
 
   price.addEventListener('input', validatePrice);
   title.addEventListener('input', validateTitle);
-  price.addEventListener('submit', validatePrice);
+  roomNumber.addEventListener('change', validatedCapacity);
+  price.addEventListener('submit', fullFormValidation);
 
+
+}
+
+function fullFormValidation(event) {
+  validatePrice();
+  validatedCapacity();
+  validateTitle();
+  if (event) {
+    event.preventDefault();
+  }
 }
 
 function invalidateFormObject(object, text) {
@@ -40,37 +39,95 @@ function releaseValidation(object) {
   object.reportValidity();
 }
 
-function validatedSpaces() {
+function validatedCapacity() {
+  const form = document.querySelector('.ad-form');
+  const roomNumber = form.querySelector('#room_number');
+  const roomNumberValue = roomNumber.value;
+  const capacity = form.querySelector('#capacity');
+  const selectOptions = capacity.querySelectorAll('option');
+  //console.log(roomNumberValue);
 
+  switch (roomNumberValue) {
+    case '1':
+      selectOptions.forEach ((element) => {
+        const value = element.getAttribute('value');
+        if (value !== '1') {
+          element.disabled = true;
+        } else {
+          element.disabled = false;
+          element.selected = true;
+        }
+      });
+
+      break;
+
+    case '2':
+      selectOptions.forEach ((element) => {
+        const value = element.getAttribute('value');
+        if ((value !== '1') && (value !== '2')) {
+          element.disabled = true;
+        } else {
+          element.disabled = false;
+          element.selected = true;
+        }
+      });
+
+      break;
+
+    case '3':
+      selectOptions.forEach ((element) => {
+        const value = element.getAttribute('value');
+        if ((value !== '1') && (value !== '2') && (value !== '3')) {
+          element.disabled = true;
+        } else {
+          element.disabled = false;
+          element.selected = true;
+        }
+      });
+
+      break;
+
+    case '100':
+      selectOptions.forEach ((element) => {
+        const value = element.getAttribute('value');
+        if ((value !== '0')) {
+          element.disabled = true;
+        } else {
+          element.disabled = false;
+          element.selected = true;
+        }
+      });
+
+      break;
+  }
 }
 
 
-function validateTitle(event) {
+function validateTitle() {
   const form = document.querySelector('.ad-form');
   const title = form.querySelector('#title');
   const titleValue = title.value;
   if (titleValue.length < 30) {
-    invalidateFormObject(title, 'Долдно быть не менее 30 символофф');
-    event.preventDefault();
+    invalidateFormObject(title, 'Должно быть не менее 30 символов');
+
   } else if (titleValue.length > 100){
-    invalidateFormObject(title, 'Долдно быть не юолее 100 символофф');
-    event.preventDefault();
+    invalidateFormObject(title, 'Должно быть не более 100 символов');
+
   } else {
     releaseValidation(title);
   }
 }
 
-function validatePrice(event) {
+function validatePrice() {
   const form = document.querySelector('.ad-form');
   const price = form.querySelector('#price');
   const priceValue = price.value;
   const roomType = form.querySelector('#type').value;
 
-  console.log(priceValue);
 
   if (priceValue > 1000000) {
     invalidateFormObject(price, 'стоимость не должна превышать 1000000');
-    event.preventDefault();
+
     return false;
   } else {
     releaseValidation(price);
@@ -78,11 +135,10 @@ function validatePrice(event) {
 
   switch (roomType) {
     case 'bungalow':
-      if (priceValue == '' || isNaN(priceValue) || priceValue < 0)  {
+      if (priceValue === '' || isNaN(priceValue) || priceValue < 0)  {
         invalidateFormObject(price, 'минимальная цена за ночь должна быть положительным числом');
         price.setCustomValidity('Invalid bungalo price');
         price.reportValidity();
-        event.preventDefault();
 
       } else {
         releaseValidation(price);
@@ -90,9 +146,9 @@ function validatePrice(event) {
       break;
 
     case 'flat':
-      if (priceValue == '' || isNaN(priceValue) || priceValue < 1000)  {
-        invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 1000')
-        event.preventDefault();
+      if (priceValue === '' || isNaN(priceValue) || priceValue < 1000)  {
+        invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 1000');
+
 
       } else {
         releaseValidation(price);
@@ -100,9 +156,9 @@ function validatePrice(event) {
       break;
 
     case 'hotel':
-      if (priceValue == '' || isNaN(priceValue) || priceValue < 3000)  {
-        invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 3000')
-        event.preventDefault();
+      if (priceValue === '' || isNaN(priceValue) || priceValue < 3000)  {
+        invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 3000');
+
 
       } else {
         releaseValidation(price);
@@ -110,9 +166,8 @@ function validatePrice(event) {
       break;
 
     case 'house':
-      if (priceValue == '' || isNaN(priceValue) || priceValue < 5000)  {
+      if (priceValue === '' || isNaN(priceValue) || priceValue < 5000)  {
         invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 5000');
-        event.preventDefault();
 
       } else {
         releaseValidation(price);
@@ -120,15 +175,14 @@ function validatePrice(event) {
       break;
 
     case 'palace':
-      if (priceValue == '' || isNaN(priceValue) || priceValue < 10000)  {
+
+      if (priceValue === '' || isNaN(priceValue) || priceValue < 10000)  {
         invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 10000');
-        event.preventDefault(price);
 
       } else {
         releaseValidation(price);
       }
       break;
-
 
   }
 
@@ -137,15 +191,15 @@ function validatePrice(event) {
 
 export function formDeactivate() {
   adForm.classList.add('ad-form--disabled');
-  fieldsets.forEach(function (element) { element.disabled = true; });
+  fieldsets.forEach((element) => { element.disabled = true; });
   mapFilters.classList.add('map__filters--disabled');
-  select.forEach(function (element) { element.disabled = true; });
+  select.forEach((element) => { element.disabled = true; });
 }
 
 export function formActivated() {
   adForm.classList.remove('ad-form--disabled');
-  fieldsets.forEach(function (element) { element.disabled = false; });
+  fieldsets.forEach((element) => { element.disabled = false; });
   mapFilters.classList.remove('map__filters--disabled');
-  select.forEach(function (element) { element.disabled = false; });
+  select.forEach((element) => { element.disabled = false; });
 }
 
