@@ -13,5 +13,5 @@ formDeactivate();
 //map load
 
 
-formActivated();
+formActivated('35.6895000', '139.6917100');
 validateForm();

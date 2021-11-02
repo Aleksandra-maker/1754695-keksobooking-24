@@ -3,22 +3,10 @@ const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 const fieldsets = adForm.querySelectorAll('fieldset');
 const select = mapFilters.querySelectorAll('select');
+const form = document.querySelector('.ad-form');
+const roomNumber = form.querySelector('#room_number');
+const defaultLocation = '35.68950  139.69171';
 
-export function validateForm() {
-  const submit = document.querySelector('.ad-form');
-  const price = submit.querySelector('#price');
-  const title = submit.querySelector('#title');
-  const roomNumber = submit.querySelector('#room_number');
-
-  validatedCapacity();
-
-  price.addEventListener('input', validatePrice);
-  title.addEventListener('input', validateTitle);
-  roomNumber.addEventListener('change', validatedCapacity);
-  price.addEventListener('submit', fullFormValidation);
-
-
-}
 
 function fullFormValidation(event) {
   validatePrice();
@@ -40,8 +28,6 @@ function releaseValidation(object) {
 }
 
 function validatedCapacity() {
-  const form = document.querySelector('.ad-form');
-  const roomNumber = form.querySelector('#room_number');
   const roomNumberValue = roomNumber.value;
   const capacity = form.querySelector('#capacity');
   const selectOptions = capacity.querySelectorAll('option');
@@ -188,8 +174,11 @@ function validatePrice() {
 
 }
 
+ 
 
 export function formDeactivate() {
+  
+   
   adForm.classList.add('ad-form--disabled');
   fieldsets.forEach((element) => { element.disabled = true; });
   mapFilters.classList.add('map__filters--disabled');
@@ -197,9 +186,25 @@ export function formDeactivate() {
 }
 
 export function formActivated() {
+  adForm.querySelector('#address').value = defaultLocation;
   adForm.classList.remove('ad-form--disabled');
   fieldsets.forEach((element) => { element.disabled = false; });
   mapFilters.classList.remove('map__filters--disabled');
   select.forEach((element) => { element.disabled = false; });
+}
+
+export function validateForm() {
+  const submit = document.querySelector('.ad-form');
+  const price = submit.querySelector('#price');
+  const title = submit.querySelector('#title');
+  const roomNumber = submit.querySelector('#room_number');
+
+  validatedCapacity();
+
+  price.addEventListener('input', validatePrice);
+  title.addEventListener('input', validateTitle);
+  roomNumber.addEventListener('change', validatedCapacity);
+  price.addEventListener('submit', fullFormValidation);
+
 }
 
