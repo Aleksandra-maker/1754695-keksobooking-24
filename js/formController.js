@@ -16,11 +16,8 @@ const select = mapFilters.querySelectorAll('select');
 const roomNumber = form.querySelector('#room_number');
 const defaultLocation = '35.68950  139.69171';
 const capacity = form.querySelector('#capacity');
-const form = document.querySelector('.ad-form');
 const title = form.querySelector('#title');
-const form = document.querySelector('.ad-form');
 const price = form.querySelector('#price');
-
 const timeOptionOne = '12:00';
 const timeOptionTwo = '13:00';
 const timeOptionThree = '14:00';
@@ -243,80 +240,6 @@ function changeCheckInType() {
   }
 }
 
-function changePricePlaceHolder() {
-  const price = form.querySelector('#price');
-  const roomType = form.querySelector('#type').value;
-  const priceValue = parseInt(price.value);
-
-  switch (roomType) {
-    case 'bungalow':
-        
-      if (priceValue === '' || isNaN(priceValue) || priceValue < 0)  {
-        price.value = ''
-        invalidateFormObject(price, 'минимальная цена за ночь должна быть положительным числом');
-        price.setCustomValidity('Invalid bungalo price');
-        price.reportValidity();
-        
-        price.setAttribute('min', parseInt(minPriceBungalo, 10));
-        price.setAttribute('placeholder', parseInt(minPriceBungalo, 10));
-        
-      } else {
-        releaseValidation(price);
-      }
-      break;
-
-    case 'flat':
-      if (priceValue === '' || isNaN(priceValue) || priceValue < minPriceFlat)  {
-        price.value = ''
-        invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 1000');
-        price.setAttribute('min', parseInt(minPriceFlat, 10));
-        price.setAttribute('placeholder', parseInt(minPriceFlat, 10));
-        price.min = 1000;
-        
-
-      } else {
-        releaseValidation(price);
-      }
-      break;
-
-    case 'hotel':
-      if (priceValue === '' || isNaN(priceValue) || priceValue < minPriceHotel)  {
-        price.value = ''
-        invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 3000');
-        price.setAttribute('min', parseInt(minPriceHotel, 10));
-        price.setAttribute('placeholder', parseInt(minPriceHotel, 10));
-
-      } else {
-        releaseValidation(price);
-      }
-      break;
-
-    case 'house':
-      if (priceValue === '' || isNaN(priceValue) || priceValue < minPriceHouse)  {
-        price.value = ''
-        invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 5000');
-        price.setAttribute('min', parseInt(minPriceHouse, 10));
-        price.setAttribute('placeholder', parseInt(minPriceHouse, 10));
-
-      } else {
-        releaseValidation(price);
-      }
-      break;
-
-    case 'palace':
-
-      if (priceValue === '' || isNaN(priceValue) || priceValue < minPricePalace)  {
-        price.value = ''
-        invalidateFormObject(price, 'минимальная цена за ночь должна быть не менее 10000');
-        price.setAttribute('min', parseInt(minPricePalace, 10));
-        price.setAttribute('placeholder', parseInt(minPricePalace, 10));
-      } else {
-        releaseValidation(price);
-      }
-      break;
-  }
-}
-
 export function formDeactivate() { 
   form.classList.add('ad-form--disabled');
   fieldsets.forEach((element) => { element.disabled = true; });
@@ -351,6 +274,6 @@ export function validateForm() {
   price.addEventListener('submit', fullFormValidation);
   checkInTime.addEventListener('change', changeCheckOutType);
   checkOutTime.addEventListener('change', changeCheckInType);
-  roomType.addEventListener('change', changePricePlaceHolder);
+  roomType.addEventListener('change', validatePrice);
 }
 
