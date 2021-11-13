@@ -1,21 +1,23 @@
 import {getRandomOffer} from './randomDataGenerators.js';
 
-export function generateRandomOfferCard() {
-  const randomElement = getRandomOffer(1)[0];
+export function generateOfferCard(offerObject) {
+  if (!offerObject) {
+    offerObject = getRandomOffer(1)[0];
+  }
 
   const templateCard = document.querySelector('#card').content;
   const randomCard = templateCard.cloneNode(true);
 
-  randomCard.querySelector('.popup__title').textContent = randomElement.offer.title;
-  randomCard.querySelector('.popup__text--address').textContent = randomElement.offer.addres;
+  randomCard.querySelector('.popup__title').textContent = offerObject.offer.title;
+  randomCard.querySelector('.popup__text--address').textContent = offerObject.offer.addres;
 
-  if (randomElement.offer.price !== '') {
-    randomCard.querySelector('.popup__text--price').textContent = `${+randomElement.offer.price} ₽/ночь`;
+  if (offerObject.offer.price !== '') {
+    randomCard.querySelector('.popup__text--price').textContent = `${+offerObject.offer.price} ₽/ночь`;
   } else {
     randomCard.querySelector('.popup__text--price').style.display = 'none';
   }
 
-  switch (randomElement.offer.type) {
+  switch (offerObject.offer.type) {
     case 'flat':
       randomCard.querySelector('.popup__type').textContent = 'Квартира';
       break;
@@ -33,17 +35,19 @@ export function generateRandomOfferCard() {
       break;
     default:
   }
-  randomCard.querySelector('.popup__text--capacity').textContent = `${+randomElement.offer.rooms} комнат для ${+randomElement.offer.guests} гостей` ;
-  randomCard.querySelector('.popup__text--time').textContent = `Заезд после ${randomElement.offer.checkin}, выезд до ${randomElement.offer.checkout}` ;
+  randomCard.querySelector('.popup__text--capacity').textContent = `${+offerObject.offer.rooms} комнат для ${+offerObject.offer.guests} гостей` ;
+  randomCard.querySelector('.popup__text--time').textContent = `Заезд после ${offerObject.offer.checkin}, выезд до ${offerObject.offer.checkout}` ;
   const features = randomCard.querySelectorAll('.popup__feature');
   const featuresDisplayStyle = features[0].style.display;
   features.forEach((element) => {element.style.display = 'none';});
-  for (let i = 0; i < randomElement.offer.features.length; i++) {
-    const concat = `.popup__feature--${  randomElement.offer.features[i]}`;
-    randomCard.querySelector(concat).style.display = featuresDisplayStyle;
+  if (offerObject.offer.features) {
+    for (let i = 0; i < offerObject.offer.features.length; i++) {
+      const concat = `.popup__feature--${  offerObject.offer.features[i]}`;
+      randomCard.querySelector(concat).style.display = featuresDisplayStyle;
+    }
   }
-  if (randomElement.offer.description) {
-    randomCard.querySelector('.popup__description').textContent = randomElement.offer.description;
+  if (offerObject.offer.description) {
+    randomCard.querySelector('.popup__description').textContent = offerObject.offer.description;
   } else {
     randomCard.querySelector('.popup__description').style.display = 'none';
   }
@@ -51,14 +55,14 @@ export function generateRandomOfferCard() {
   const photoTemplate = randomCard.querySelector('.popup__photo');
   const photoClone = photoTemplate.cloneNode(true);
   photoTemplate.remove();
-
-  for (let i = 0; i < randomElement.offer.photo.length;i++) {
-    const clonedPhoto = photoClone.cloneNode(true);
-    clonedPhoto.src = randomElement.offer.photo[i];
-    randomCard.querySelector('.popup__photos').appendChild(clonedPhoto);
+  if (offerObject.offer.photo) {
+    for (let i = 0; i < offerObject.offer.photo.length;i++) {
+      const clonedPhoto = photoClone.cloneNode(true);
+      clonedPhoto.src = offerObject.offer.photo[i];
+      randomCard.querySelector('.popup__photos').appendChild(clonedPhoto);
+    }
   }
-
-  randomCard.querySelector('.popup__avatar').src = randomElement.author.avatar;
+  randomCard.querySelector('.popup__avatar').src = offerObject.author.avatar;
 
   return randomCard;
 }

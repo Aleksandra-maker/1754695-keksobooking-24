@@ -1,3 +1,5 @@
+import {generateOfferCard} from './layoutGenerator.js';
+
 const minPriceFlat = 1000;
 const minPriceHotel = 3000;
 const minPriceHouse = 5000;
@@ -21,8 +23,10 @@ const price = form.querySelector('#price');
 const timeOptionOne = '12:00';
 const timeOptionTwo = '13:00';
 const timeOptionThree = '14:00';
-
-
+const decimalPlaces = 5;
+const similarEndPoint = 'https://24.javascript.pages.academy/keksobooking/data'
+const mainPinIconImage = '/img/main-pin.svg'
+const pinIcon = '/img/pin.svg'
 
 function fullFormValidation(event) {
   validatePrice();
@@ -253,6 +257,7 @@ export function formActivated() {
   fieldsets.forEach((element) => { element.disabled = false; });
   mapFilters.classList.remove('map__filters--disabled');
   select.forEach((element) => { element.disabled = false; });
+  fetchSimilar()
 }
 
 export function validateForm() {
@@ -266,7 +271,7 @@ export function validateForm() {
 
   validatedCapacity();
   changeCheckInType();
-  validatePrice();
+  //validatePrice();
 
   price.addEventListener('input', validatePrice);
   title.addEventListener('input', validateTitle);
@@ -275,5 +280,89 @@ export function validateForm() {
   checkInTime.addEventListener('change', changeCheckOutType);
   checkOutTime.addEventListener('change', changeCheckInType);
   roomType.addEventListener('change', validatePrice);
+
+
+  
 }
 
+
+const map = L.map('map-canvas')
+.setView({
+  lat: 35.68334,
+  lng: 139.78199,
+}, 10);
+
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+},
+).addTo(map);
+
+
+const mainPinIcon = L.icon({
+  //iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
+  iconUrl: mainPinIconImage,
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+
+});
+
+const mainPinMarker = L.marker(
+{
+  lat: 35.68334,
+  lng: 139.78199,
+},
+{
+  icon: mainPinIcon,
+  draggable: true,
+},
+);
+
+mainPinMarker.addTo(map);
+
+mainPinMarker.on('moveend', (evt) => {
+  const coordsObject = document.querySelector('#address')
+  
+  const coords = evt.target.getLatLng();
+
+  coordsObject.value = coords['lat'].toFixed(decimalPlaces) + ' ' + coords['lng'].toFixed(decimalPlaces)
+
+});
+
+
+
+function drawPins(posts) {
+  
+  posts.forEach(post => {
+    console.log(post)
+    const normalPinIcon = L.icon({
+      iconUrl: pinIcon,
+      iconSize: [52, 52],
+      iconAnchor: [26, 52],
+    
+    });
+    const normalPinMarker = L.marker(
+      {
+        lat: post['location']['lat'],
+        lng: post['location']['lng'],
+      },
+      {
+        icon: normalPinIcon,
+        draggable: false,
+      },
+      );
+      
+      
+      normalPinMarker.bindPopup(generateOfferCard(post))
+      normalPinMarker.addTo(map);   
+  });
+  
+}
+
+function fetchSimilar() {
+  fetch(similarEndPoint)
+  .then((response) => response.json())
+  .then(((posts) => drawPins(posts)))
+  
+}

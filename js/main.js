@@ -1,4 +1,4 @@
-import {generateRandomOfferCard} from './layoutGenerator.js';
+import {generateOfferCard} from './layoutGenerator.js';
 import {formDeactivate} from './formController.js';
 import {formActivated} from './formController.js';
 
@@ -6,7 +6,7 @@ import {validateForm} from './formController.js';
 
 
 const promo = document.querySelector('#map-canvas');
-promo.appendChild(generateRandomOfferCard());
+promo.appendChild(generateOfferCard());
 
 formDeactivate();
 
