@@ -1,5 +1,6 @@
 import {getRandomOffer} from './randomDataGenerators.js';
 
+
 export function generateOfferCard(offerObject) {
   if (!offerObject) {
     offerObject = getRandomOffer(1)[0];
@@ -55,10 +56,11 @@ export function generateOfferCard(offerObject) {
   const photoTemplate = randomCard.querySelector('.popup__photo');
   const photoClone = photoTemplate.cloneNode(true);
   photoTemplate.remove();
-  if (offerObject.offer.photo) {
-    for (let i = 0; i < offerObject.offer.photo.length;i++) {
+
+  if (offerObject.offer.photos) {
+    for (let i = 0; i < offerObject.offer.photos.length;i++) {
       const clonedPhoto = photoClone.cloneNode(true);
-      clonedPhoto.src = offerObject.offer.photo[i];
+      clonedPhoto.src = offerObject.offer.photos[i];
       randomCard.querySelector('.popup__photos').appendChild(clonedPhoto);
     }
   }
