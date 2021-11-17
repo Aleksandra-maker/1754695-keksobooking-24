@@ -1,3 +1,6 @@
+import {fetchSimilar} from './mapController.js';
+
+
 const minPriceFlat = 1000;
 const minPriceHotel = 3000;
 const minPriceHouse = 5000;
@@ -8,6 +11,7 @@ const roomNumberOne = '1';
 const roomNumberTwo = '2';
 const roomNumberThree = '3';
 const roomNumberHundred = '100';
+
 
 const form = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -21,7 +25,6 @@ const price = form.querySelector('#price');
 const timeOptionOne = '12:00';
 const timeOptionTwo = '13:00';
 const timeOptionThree = '14:00';
-
 
 
 function fullFormValidation(event) {
@@ -119,37 +122,37 @@ function validateTitle() {
 }
 
 function validatePrice() {
-  const priceValue = parseInt(price.value);
+  const priceValue = parseInt(price.value, 10);
   const roomType = form.querySelector('#type').value;
-  
+
   if (priceValue > 1000000) {
     invalidateFormObject(price, 'стоимость не должна превышать 1000000');
-    
+
     return false;
   } else {
     releaseValidation(price);
   }
-  
+
   if (priceValue < 0 ) {
     invalidateFormObject(price, 'стоимость не может быть меньше нуля');
-    price.value = ""
+    price.value = '';
     return false;
   } else {
     releaseValidation(price);
   }
-  
+
   switch (roomType) {
     case 'bungalow':
-      
-      
+
+
       if (priceValue === '' || isNaN(priceValue) || priceValue < 0)  {
         invalidateFormObject(price, 'минимальная цена за ночь должна быть положительным числом');
         price.setCustomValidity('Invalid bungalo price');
         price.reportValidity();
-        
+
         price.setAttribute('min', parseInt(minPriceBungalo, 10));
         price.setAttribute('placeholder', parseInt(minPriceBungalo, 10));
-        
+
       } else {
         releaseValidation(price);
       }
@@ -161,7 +164,7 @@ function validatePrice() {
         price.setAttribute('min', parseInt(minPriceFlat, 10));
         price.setAttribute('placeholder', parseInt(minPriceFlat, 10));
         price.min = 1000;
-        
+
 
       } else {
         releaseValidation(price);
@@ -206,10 +209,9 @@ function validatePrice() {
 }
 
 function changeCheckOutType() {
-  
-  const checkIn = document.querySelector("#timein");
-  const checkOutTime = document.querySelector("#timeout");
-  console.log('checkin time changed to ', checkIn.value);
+
+  const checkIn = document.querySelector('#timein');
+  const checkOutTime = document.querySelector('#timeout');
   switch (checkIn.value) {
     case (timeOptionOne):
       checkOutTime.value = checkIn.value;
@@ -225,8 +227,8 @@ function changeCheckOutType() {
 }
 
 function changeCheckInType() {
-  const checkIn = document.querySelector("#timein");
-  const checkOutTime = document.querySelector("#timeout");
+  const checkIn = document.querySelector('#timein');
+  const checkOutTime = document.querySelector('#timeout');
   switch (checkOutTime.value) {
     case (timeOptionOne):
       checkIn.value = checkOutTime.value;
@@ -240,33 +242,36 @@ function changeCheckInType() {
   }
 }
 
-export function formDeactivate() { 
+export function formDeactivate() {
   form.classList.add('ad-form--disabled');
   fieldsets.forEach((element) => { element.disabled = true; });
   mapFilters.classList.add('map__filters--disabled');
   select.forEach((element) => { element.disabled = true; });
 }
 
-export function formActivated() {
+
+export function formActivate() {
+  //const form = document.querySelector('.ad-form');
   form.querySelector('#address').value = defaultLocation;
   form.classList.remove('ad-form--disabled');
   fieldsets.forEach((element) => { element.disabled = false; });
   mapFilters.classList.remove('map__filters--disabled');
   select.forEach((element) => { element.disabled = false; });
+  fetchSimilar();
 }
 
 export function validateForm() {
   const submit = document.querySelector('.ad-form');
-  const price = submit.querySelector('#price');
-  const title = submit.querySelector('#title');
-  const roomNumber = submit.querySelector('#room_number');
+  //const price = submit.querySelector('#price');
+  //const title = submit.querySelector('#title');
+  //const roomNumber = submit.querySelector('#room_number');
   const checkInTime = submit.querySelector('#timein');
   const checkOutTime = submit.querySelector('#timeout');
   const roomType = submit.querySelector('#type');
 
   validatedCapacity();
   changeCheckInType();
-  validatePrice();
+  //validatePrice();
 
   price.addEventListener('input', validatePrice);
   title.addEventListener('input', validateTitle);
@@ -276,4 +281,3 @@ export function validateForm() {
   checkOutTime.addEventListener('change', changeCheckInType);
   roomType.addEventListener('change', validatePrice);
 }
-
