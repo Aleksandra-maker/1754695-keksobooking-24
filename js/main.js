@@ -1,26 +1,15 @@
-<<<<<<< Updated upstream
-import {generateRandomOfferCard} from './layoutGenerator.js';
 import {formDeactivate} from './formController.js';
-import {formActivated} from './formController.js';
+import {formActivate} from './formController.js';
+import {map} from './mapController.js';
 
-=======
-import { formDeactivate } from './formController.js';
-import { formActivate } from './formController.js';
-import { map } from './mapController.js';
+import {validateForm} from './formController.js';
 
-import { validateForm } from './formController.js';
->>>>>>> Stashed changes
 
-const promo = document.querySelector('#map-canvas');
-promo.appendChild(generateRandomOfferCard());
+//const promo = document.querySelector('#map-canvas');
+//promo.appendChild(generateOfferCard());
 
 formDeactivate();
 
-//map load
+map.on('load', formActivate());
 
-
-<<<<<<< Updated upstream
-//formActivated();
-=======
 validateForm();
->>>>>>> Stashed changes
