@@ -1,4 +1,5 @@
-import {fetchSimilar} from './mapController.js';
+import {fetchSimilar} from './externalApiController.js';
+import { drawPins } from './mapController.js';
 
 
 const minPriceFlat = 1000;
@@ -25,6 +26,7 @@ const price = form.querySelector('#price');
 const timeOptionOne = '12:00';
 const timeOptionTwo = '13:00';
 const timeOptionThree = '14:00';
+let similarPosts = [];
 
 
 function fullFormValidation(event) {
@@ -280,4 +282,84 @@ export function validateForm() {
   checkInTime.addEventListener('change', changeCheckOutType);
   checkOutTime.addEventListener('change', changeCheckInType);
   roomType.addEventListener('change', validatePrice);
+  for  (const selector of select ) {
+    selector.addEventListener(('change'), getFilteredSuggestions);
+  }
+}
+
+function getFilterCriteria() {
+  const criteria = {};
+  for (const selector of select) {
+    criteria[selector.name] = selector.value;
+
+  }
+  return criteria;
+}
+
+function checkIfPostFitsCriteria(post, criteria) {
+  //console.log(criteria)
+  if (post.offer.type !== criteria['housing-type']) {
+    if (criteria['housing-type'] !== 'any') 
+    {
+      return false;
+    }
+  }
+  //console.log(criteria)
+  switch (criteria['housing-price']) {
+    case 'low':
+      if (post.offer.price >= 10000) {
+        return false;
+      }
+      break;
+    case 'middle':
+      if (post.offer.price < 10000 || post.offer.price >= 50000) {
+        return false;
+      } break;
+    case 'high':
+      if (post.offer.price < 50000) {
+        return false;
+      } break;
+    case 'any':
+      //console.log('case ANY');
+      break;
+  }
+  if (criteria['housing-rooms'] != post.offer.rooms) {
+    //console.log (criteria['housing-rooms'],'   VS   ' ,post.offer.rooms )
+    if (criteria['housing-rooms'] !== 'any') {
+      return false;
+    }
+  }
+  let tempguests = post.offer.guests;
+  if (post.offer.guests > 2) {
+    tempguests = 0;
+  }
+  if (criteria['housing-guests'] != tempguests) { 
+    //console.log (criteria['housing-rooms'],'   VS   ' ,post.offer.rooms )
+    if (criteria['housing-guests'] !== 'any') {
+      return false;
+    }
+  }
+  return true;
+}
+
+
+function  getFilteredSuggestions() {
+  const unFilteredPosts = similarPosts.slice();
+  const filteredPosts = [];
+  const criteria = getFilterCriteria();
+  for (const post of unFilteredPosts) {
+    if (checkIfPostFitsCriteria(post, criteria)) {
+      //console.log(post, 'FITS')
+      filteredPosts.push(post);
+      if (filteredPosts.length == 10) {
+        //console.log(filteredPosts)
+        return filteredPosts;
+      }
+    }
+  }
+  return filteredPosts;
+}
+
+export function setAllSimilarPosts(posts) {
+  similarPosts = posts;
 }

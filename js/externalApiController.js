@@ -6,7 +6,7 @@ const submitEndPoint = 'https://24.javascript.pages.academy/keksobooking'
 
 
 export function fetchSimilar() {
-    console.log(Math.random())
+    //console.log(Math.random())
     fetch(similarEndPoint)
         .then((response) => response.json())
         .then(((posts) => setAllSimilarPosts(posts)));
