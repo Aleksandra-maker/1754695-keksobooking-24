@@ -1,9 +1,9 @@
-import { drawPins } from './mapController.js';
-import { generateOfferCard } from './layoutGenerator.js';
+/* eslint-disable indent */
+//import { drawPins } from './mapController.js';
+//import { generateOfferCard } from './layoutGenerator.js';
 import { setAllSimilarPosts } from './formController.js';
 const similarEndPoint = 'https://24.javascript.pages.academy/keksobooking/data';
-const submitEndPoint = 'https://24.javascript.pages.academy/keksobooking'
-
+const submitEndPoint = 'https://24.javascript.pages.academy/keksobooking';
 
 export function fetchSimilar() {
     //console.log(Math.random())
@@ -26,7 +26,4 @@ export function sendForm(form) {
         })
         .then(function(res) { console.log(res) })
         .catch(function(res) { console.log(res) })
-
-
-
 }

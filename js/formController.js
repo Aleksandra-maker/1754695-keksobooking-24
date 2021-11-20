@@ -249,6 +249,7 @@ export function formDeactivate() {
   fieldsets.forEach((element) => { element.disabled = true; });
   mapFilters.classList.add('map__filters--disabled');
   select.forEach((element) => { element.disabled = true; });
+  drawSuggested();
 }
 
 
@@ -283,9 +284,15 @@ export function validateForm() {
   checkOutTime.addEventListener('change', changeCheckInType);
   roomType.addEventListener('change', validatePrice);
   for  (const selector of select ) {
-    selector.addEventListener(('change'), getFilteredSuggestions);
+    selector.addEventListener(('change'), drawSuggested);
   }
 }
+
+function drawSuggested() {
+  const posts = getFilteredSuggestions();
+  drawPins(posts);
+}
+
 
 function getFilterCriteria() {
   const criteria = {};
@@ -362,4 +369,5 @@ function  getFilteredSuggestions() {
 
 export function setAllSimilarPosts(posts) {
   similarPosts = posts;
+  drawSuggested();
 }
