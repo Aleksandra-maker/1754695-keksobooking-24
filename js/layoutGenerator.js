@@ -1,7 +1,6 @@
 
 export function generateOfferCard(offerObject) {
-
-  const templateCard = document.querySelector('#card').content;
+  const templateCard = document.querySelector('#card').content.querySelector('.popup');
   const randomCard = templateCard.cloneNode(true);
 
   randomCard.querySelector('.popup__title').textContent = offerObject.offer.title;

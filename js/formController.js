@@ -1,5 +1,5 @@
 import {fetchSimilar} from './externalApiController.js';
-import { drawPins } from './mapController.js';
+import { drawPins, map } from './mapController.js';
 
 
 const minPriceFlat = 1000;
@@ -260,6 +260,7 @@ export function formActivate() {
   fieldsets.forEach((element) => { element.disabled = false; });
   mapFilters.classList.remove('map__filters--disabled');
   select.forEach((element) => { element.disabled = false; });
+  map.addEventListener('scroll', fetchSimilar);
   fetchSimilar();
 }
 

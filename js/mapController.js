@@ -60,7 +60,7 @@ export function drawPins(posts) {
   for (const post of posts) {
     const normalPinIcon = L.icon({
       iconUrl: pinIcon,
-      iconSize: [52, 52],
+      iconSize: [40, 40],
       iconAnchor: [26, 52],
 
     });

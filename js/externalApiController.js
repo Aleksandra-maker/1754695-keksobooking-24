@@ -15,14 +15,14 @@ export function fetchSimilar() {
 
 
 export function sendForm(form) {
-    console.log(form)
+    //console.log(form)
     fetch(submitEndPoint, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify(form)
+            body: JSON.stringify(form),
         })
         .then(function(res) { console.log(res) })
         .catch(function(res) { console.log(res) })
