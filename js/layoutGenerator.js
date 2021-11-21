@@ -72,6 +72,7 @@ export function generatePopUp(successfulSend) {
   }
   body.appendChild(templatePopUp.cloneNode(true));
   document.addEventListener('keydown', closePopUp);
+  document.addEventListener('click', closePopUp);
 
   if (!successfulSend) {
     document.querySelector('.error__button').addEventListener('click',closePopUp);
@@ -81,8 +82,9 @@ export function generatePopUp(successfulSend) {
 
 
 function closePopUp(event) {
-  if(event.key === 'Escape' ) {
+  if(event.key === 'Escape' || event.type === 'click' ) {
     document.removeEventListener('keydown',closePopUp, false);
+    document.removeEventListener('click',closePopUp, false);
     if (document.querySelector('.success')) {
       document.querySelector('.success').remove();
     } else {

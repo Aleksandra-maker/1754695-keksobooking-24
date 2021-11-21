@@ -283,7 +283,6 @@ export function validateForm() {
   checkOutTime.addEventListener('change', changeCheckInType);
   roomType.addEventListener('change', validatePrice);
   mapFilters.addEventListener('change', drawSuggested);
-
   form.addEventListener('submit', fullFormValidation);
 }
 
