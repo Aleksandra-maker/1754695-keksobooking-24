@@ -1,11 +1,11 @@
 import { setAllSimilarPosts } from './formController.js';
-const similarEndPoint = 'https://24.javascript.pages.academy/keksobooking/data';
-const submitEndPoint = 'https://24.javascript.pages.academy/keksobooking';
 import { generatePopUp } from './layoutGenerator.js';
 
+const SIMILARENDPOINT = 'https://24.javascript.pages.academy/keksobooking/data';
+const SUBMITENDPOINT = 'https://24.javascript.pages.academy/keksobooking';
 
 export function fetchSimilar() {
-  fetch(similarEndPoint)
+  fetch(SIMILARENDPOINT)
     .then((response) => response.json())
     .then((posts) => setAllSimilarPosts(posts))
     .catch((response) => failedFetchimilarOffers(response));
@@ -17,7 +17,7 @@ function failedFetchimilarOffers() {
 }
 
 export function sendForm(form) {
-  fetch(submitEndPoint, {
+  fetch(SUBMITENDPOINT, {
 
     method: 'POST',
     body: new FormData(form),
