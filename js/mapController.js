@@ -1,8 +1,5 @@
-//import { formActivate } from './formController.js';
-
-//import {formActivate} from './formController.js';
 import { generateOfferCard } from './layoutGenerator.js';
-//import {similarPosts} from "./formController.js"
+
 const decimalPlaces = 5;
 
 const mainPinIconImage = 'img/main-pin.svg';

@@ -1,4 +1,4 @@
-import {fetchSimilar} from './externalApiController.js';
+import {fetchSimilar, sendForm} from './externalApiController.js';
 import { drawPins, map } from './mapController.js';
 
 
@@ -26,6 +26,7 @@ const price = form.querySelector('#price');
 const timeOptionOne = '12:00';
 const timeOptionTwo = '13:00';
 const timeOptionThree = '14:00';
+const submitButton = form.querySelector('.ad-form__submit');
 export let similarPosts = [];
 
 
@@ -33,9 +34,12 @@ function fullFormValidation(event) {
   validatePrice();
   validatedCapacity();
   validateTitle();
-  if (event) {
-    event.preventDefault();
-  }
+  
+  event.preventDefault();
+  sendForm(form);
+
+  
+
 }
 
 function invalidateFormObject(object, text) {
@@ -280,13 +284,14 @@ export function validateForm() {
   price.addEventListener('input', validatePrice);
   title.addEventListener('input', validateTitle);
   roomNumber.addEventListener('change', validatedCapacity);
-  price.addEventListener('submit', fullFormValidation);
+  //price.addEventListener('submit', fullFormValidation);
   checkInTime.addEventListener('change', changeCheckOutType);
   checkOutTime.addEventListener('change', changeCheckInType);
   roomType.addEventListener('change', validatePrice);
   for  (const selector of select ) {
-    selector.addEventListener(('change'), drawSuggested);
+    selector.addEventListener('change', drawSuggested);
   }
+  form.addEventListener('submit', fullFormValidation);
 }
 
 function drawSuggested() {
