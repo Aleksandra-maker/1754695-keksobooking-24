@@ -2,12 +2,12 @@ import { setAllSimilarPosts } from './formController.js';
 const similarEndPoint = 'https://24.javascript.pages.academy/keksobooking/data';
 const submitEndPoint = 'https://24.javascript.pages.academy/keksobooking';
 import { generatePopUp } from './layoutGenerator.js';
-import { debounce } from './utils/debounce.js';
+
 
 export function fetchSimilar() {
   fetch(similarEndPoint)
     .then((response) => response.json())
-    .then(((posts) => debounce(setAllSimilarPosts(posts),500)))
+    .then((posts) => setAllSimilarPosts(posts))
     .catch((response) => failedFetchimilarOffers(response));
 
 }
