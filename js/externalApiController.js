@@ -21,15 +21,16 @@ function failedFetchimilarOffers(response) {
  alert('Не удалось получить данные с сервера');
 }
 
-export function sendForm(form) {
-    //console.log(form)
+export function sendForm(event) {
+    const formData = new FormData(event.target);
+    console.log(formData);
     fetch(submitEndPoint, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             method: 'POST',
-            body: JSON.stringify(form),
+            body: formData,
         })
         .then((response) => response.ok ? successfulSubmitOffer(response) : failedSubmitOffer(response))
 

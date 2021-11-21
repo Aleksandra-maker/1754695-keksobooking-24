@@ -34,12 +34,8 @@ function fullFormValidation(event) {
   validatePrice();
   validatedCapacity();
   validateTitle();
-  
   event.preventDefault();
-  sendForm(form);
-
-  
-
+  sendForm(event.target);
 }
 
 function invalidateFormObject(object, text) {
