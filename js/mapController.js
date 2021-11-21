@@ -14,7 +14,7 @@ export const map = L.map('map-canvas')
   }, 10);
 //map.on('load', formActivated());
 
-const tileLayer = L.tileLayer(
+L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
@@ -48,7 +48,7 @@ mainPinMarker.on('moveend', (evt) => {
 export function drawPins(posts) {
 
   map.eachLayer((layer) => {
-    if (layer['_latlng'] != undefined)
+    if (layer['_latlng'] !== undefined)
     {layer.remove();}
   });
   mainPinMarker.addTo(map);

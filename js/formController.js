@@ -326,7 +326,7 @@ function checkIfPostFitsCriteria(post, criteria) {
     case 'any':
       break;
   }
-  if (criteria['housing-rooms'] != post.offer.rooms) {
+  if (criteria['housing-rooms'] !== post.offer.rooms.toString()) {
     if (criteria['housing-rooms'] !== 'any') {
       return false;
     }
@@ -335,7 +335,7 @@ function checkIfPostFitsCriteria(post, criteria) {
   if (post.offer.guests > 2) {
     tempguests = 0;
   }
-  if (criteria['housing-guests'] != tempguests) {
+  if (criteria['housing-guests'] !== tempguests.toString()) {
     if (criteria['housing-guests'] !== 'any') {
       return false;
     }
@@ -368,7 +368,7 @@ function  getFilteredSuggestions() {
   for (const post of unFilteredPosts) {
     if (checkIfPostFitsCriteria(post, criteria) && checkFeatures(post.offer) ) {
       filteredPosts.push(post);
-      if (filteredPosts.length == 10) {
+      if (filteredPosts.length === 10) {
         return filteredPosts;
       }
     }
