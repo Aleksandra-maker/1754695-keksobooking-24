@@ -284,9 +284,8 @@ export function validateForm() {
   checkInTime.addEventListener('change', changeCheckOutType);
   checkOutTime.addEventListener('change', changeCheckInType);
   roomType.addEventListener('change', validatePrice);
-  for  (const selector of select ) {
-    selector.addEventListener('change', drawSuggested);
-  }
+  mapFilters.addEventListener('change', drawSuggested);
+
   form.addEventListener('submit', fullFormValidation);
 }
 
@@ -308,7 +307,7 @@ function getFilterCriteria() {
 function checkIfPostFitsCriteria(post, criteria) {
   //console.log(criteria)
   if (post.offer.type !== criteria['housing-type']) {
-    if (criteria['housing-type'] !== 'any') 
+    if (criteria['housing-type'] !== 'any')
     {
       return false;
     }
@@ -342,13 +341,31 @@ function checkIfPostFitsCriteria(post, criteria) {
   if (post.offer.guests > 2) {
     tempguests = 0;
   }
-  if (criteria['housing-guests'] != tempguests) { 
+  if (criteria['housing-guests'] != tempguests) {
     //console.log (criteria['housing-rooms'],'   VS   ' ,post.offer.rooms )
     if (criteria['housing-guests'] !== 'any') {
       return false;
     }
   }
+
+
   return true;
+}
+
+function  checkFeatures (offer)  {
+  let matchOrNot = true;
+  const chosenFeatures = mapFilters.querySelectorAll('.map__checkbox:checked');
+  if (chosenFeatures.length > 0) {
+    if (offer.features === undefined) {
+      return  false;
+    }
+    chosenFeatures.forEach((element) => {
+      if (!offer.features.includes(element.value)) {
+        matchOrNot = false;
+      }
+    });
+  }
+  return matchOrNot;
 }
 
 
@@ -357,7 +374,7 @@ function  getFilteredSuggestions() {
   const filteredPosts = [];
   const criteria = getFilterCriteria();
   for (const post of unFilteredPosts) {
-    if (checkIfPostFitsCriteria(post, criteria)) {
+    if (checkIfPostFitsCriteria(post, criteria) && checkFeatures(post.offer) ) {
       //console.log(post, 'FITS')
       filteredPosts.push(post);
       if (filteredPosts.length == 10) {

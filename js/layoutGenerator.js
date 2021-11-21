@@ -62,3 +62,18 @@ export function generateOfferCard(offerObject) {
 
   return randomCard;
 }
+
+
+export function generatePopUp() {
+  const body = document.querySelector('body');
+  const templatePopUp = document.querySelector('#success').content;
+  const popUp = templatePopUp.cloneNode(true);
+  body.appendChild(popUp);
+  const realPopUp = document.querySelector('.success');
+  realPopUp.addEventListener('keydown', (event) => {
+    if(event.key === 'Escape'){
+      realPopUp.remove;
+    }
+  });
+}
+

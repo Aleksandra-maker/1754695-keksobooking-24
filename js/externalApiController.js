@@ -1,6 +1,7 @@
 import { setAllSimilarPosts } from './formController.js';
 const similarEndPoint = 'https://24.javascript.pages.academy/keksobooking/data';
 const submitEndPoint = 'https://24.javascript.pages.academy/keksobooking';
+import { generatePopUp } from './layoutGenerator.js';
 
 export function fetchSimilar() {
   //console.log(Math.random())
@@ -40,7 +41,8 @@ function failedSubmitOffer(response) {
 
 function successfulSubmitOffer(response) {
   // eslint-disable-next-line no-console
-  console.log(response);
+  //console.log(response);
+  generatePopUp();
   // eslint-disable-next-line no-alert
   alert('Данные формы отправлены успешно');
 }
