@@ -64,16 +64,32 @@ export function generateOfferCard(offerObject) {
 }
 
 
-export function generatePopUp() {
+export function generatePopUp(successfulSend) {
+  let templatePopUp = document.querySelector('#success').content;
   const body = document.querySelector('body');
-  const templatePopUp = document.querySelector('#success').content;
-  const popUp = templatePopUp.cloneNode(true);
-  body.appendChild(popUp);
-  const realPopUp = document.querySelector('.success');
-  realPopUp.addEventListener('keydown', (event) => {
-    if(event.key === 'Escape'){
-      realPopUp.remove;
-    }
-  });
+  if (!successfulSend) {
+    templatePopUp = document.querySelector('#error').content;
+  }
+  body.appendChild(templatePopUp.cloneNode(true));
+  document.addEventListener('keydown', closePopUp);
+
+  if (!successfulSend) {
+    document.querySelector('.error__button').addEventListener('click',closePopUp);
+  }
+
 }
 
+
+function closePopUp(event) {
+  if(event.key === 'Escape' ) {
+    document.removeEventListener('keydown',closePopUp, false);
+    if (document.querySelector('.success')) {
+      document.querySelector('.success').remove();
+    } else {
+      document.querySelector('.error').remove();
+    }
+  }
+  if (event.target.type === 'button') {
+    document.querySelector('.error').remove();
+  }
+}

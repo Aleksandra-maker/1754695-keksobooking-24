@@ -36,13 +36,13 @@ function failedSubmitOffer(response) {
   // eslint-disable-next-line no-console
   console.log(response);
   // eslint-disable-next-line no-alert
-  alert('Не удалось отправит данные формы на сервер');
+  generatePopUp(false);
 }
 
 function successfulSubmitOffer(response) {
   // eslint-disable-next-line no-console
   //console.log(response);
-  generatePopUp();
+  generatePopUp(true);
   // eslint-disable-next-line no-alert
-  alert('Данные формы отправлены успешно');
+  //alert('Данные формы отправлены успешно');
 }
