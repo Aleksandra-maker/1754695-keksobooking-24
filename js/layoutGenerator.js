@@ -1,10 +1,5 @@
-import {getRandomOffer} from './randomDataGenerators.js';
-
 
 export function generateOfferCard(offerObject) {
-  if (!offerObject) {
-    offerObject = getRandomOffer(1)[0];
-  }
 
   const templateCard = document.querySelector('#card').content;
   const randomCard = templateCard.cloneNode(true);

@@ -26,7 +26,7 @@ const price = form.querySelector('#price');
 const timeOptionOne = '12:00';
 const timeOptionTwo = '13:00';
 const timeOptionThree = '14:00';
-let similarPosts = [];
+export let similarPosts = [];
 
 
 function fullFormValidation(event) {
