@@ -302,14 +302,13 @@ function getFilterCriteria() {
 }
 
 function checkIfPostFitsCriteria(post, criteria) {
-  //console.log(criteria)
   if (post.offer.type !== criteria['housing-type']) {
     if (criteria['housing-type'] !== 'any')
     {
       return false;
     }
   }
-  //console.log(criteria)
+
   switch (criteria['housing-price']) {
     case 'low':
       if (post.offer.price >= 10000) {
@@ -325,11 +324,9 @@ function checkIfPostFitsCriteria(post, criteria) {
         return false;
       } break;
     case 'any':
-      //console.log('case ANY');
       break;
   }
   if (criteria['housing-rooms'] != post.offer.rooms) {
-    //console.log (criteria['housing-rooms'],'   VS   ' ,post.offer.rooms )
     if (criteria['housing-rooms'] !== 'any') {
       return false;
     }
@@ -339,7 +336,6 @@ function checkIfPostFitsCriteria(post, criteria) {
     tempguests = 0;
   }
   if (criteria['housing-guests'] != tempguests) {
-    //console.log (criteria['housing-rooms'],'   VS   ' ,post.offer.rooms )
     if (criteria['housing-guests'] !== 'any') {
       return false;
     }
@@ -371,10 +367,8 @@ function  getFilteredSuggestions() {
   const criteria = getFilterCriteria();
   for (const post of unFilteredPosts) {
     if (checkIfPostFitsCriteria(post, criteria) && checkFeatures(post.offer) ) {
-      //console.log(post, 'FITS')
       filteredPosts.push(post);
       if (filteredPosts.length == 10) {
-        //console.log(filteredPosts)
         return filteredPosts;
       }
     }

@@ -12,11 +12,8 @@ export function fetchSimilar() {
 
 }
 
-function failedFetchimilarOffers(response) {
-  // eslint-disable-next-line no-console
-  console.log(response);
-  // eslint-disable-next-line no-alert
-  alert('Не удалось получить данные с сервера');
+function failedFetchimilarOffers() {
+  generatePopUp(false,true);
 }
 
 export function sendForm(form) {
@@ -29,12 +26,10 @@ export function sendForm(form) {
     .catch((response) => failedSubmitOffer(response));
 }
 
-function failedSubmitOffer(response) {
-  // eslint-disable-next-line no-console
-  console.log(response);
-  generatePopUp(false);
+function failedSubmitOffer() {
+  generatePopUp(false,false);
 }
 
 function successfulSubmitOffer() {
-  generatePopUp(true);
+  generatePopUp(true,false);
 }

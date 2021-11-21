@@ -34,7 +34,7 @@ const mainPinMarker = L.marker({
 }, {
   icon: mainPinIcon,
   draggable: true,
-}, );
+} );
 
 mainPinMarker.addTo(map);
 
@@ -49,7 +49,7 @@ export function drawPins(posts) {
 
   map.eachLayer((layer) => {
     if (layer['_latlng'] != undefined)
-      layer.remove();
+    {layer.remove();}
   });
   mainPinMarker.addTo(map);
 
@@ -68,7 +68,6 @@ export function drawPins(posts) {
       icon: normalPinIcon,
       draggable: false,
     } );
-    //console.log(post);
     normalPinMarker.bindPopup(generateOfferCard(post));
     normalPinMarker.addTo(map);
 

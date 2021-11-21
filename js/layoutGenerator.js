@@ -65,11 +65,14 @@ export function generateOfferCard(offerObject) {
 }
 
 
-export function generatePopUp(successfulSend) {
+export function generatePopUp(successfulSend, badGetPosts) {
   let templatePopUp = document.querySelector('#success').content;
   const body = document.querySelector('body');
   if (!successfulSend) {
     templatePopUp = document.querySelector('#error').content;
+    if (badGetPosts) {
+      document.querySelector('error_message').value = 'Нет соединения с сервером';
+    }
   }
   body.appendChild(templatePopUp.cloneNode(true));
   document.addEventListener('keydown', closePopUp);
