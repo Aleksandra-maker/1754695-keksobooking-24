@@ -48,11 +48,9 @@ function releaseValidation(object) {
   object.reportValidity();
 }
 
-//Capacity validator
 function validatedCapacity() {
   const roomNumberValue = roomNumber.value;
   const selectOptions = capacity.querySelectorAll('option');
-  //console.log(roomNumberValue);
 
   switch (roomNumberValue) {
     case roomNumberOne:
@@ -347,7 +345,6 @@ function checkIfPostFitsCriteria(post, criteria) {
       return false;
     }
   }
-
 
   return true;
 }

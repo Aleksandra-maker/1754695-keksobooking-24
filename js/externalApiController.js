@@ -2,12 +2,12 @@ import { setAllSimilarPosts } from './formController.js';
 const similarEndPoint = 'https://24.javascript.pages.academy/keksobooking/data';
 const submitEndPoint = 'https://24.javascript.pages.academy/keksobooking';
 import { generatePopUp } from './layoutGenerator.js';
+import { debounce } from './utils/debounce.js';
 
 export function fetchSimilar() {
-  //console.log(Math.random())
   fetch(similarEndPoint)
     .then((response) => response.json())
-    .then(((posts) => setAllSimilarPosts(posts)))
+    .then(((posts) => debounce(setAllSimilarPosts(posts),500)))
     .catch((response) => failedFetchimilarOffers(response));
 
 }
@@ -20,29 +20,21 @@ function failedFetchimilarOffers(response) {
 }
 
 export function sendForm(form) {
-  //console.log(form)
   fetch(submitEndPoint, {
 
     method: 'POST',
     body: new FormData(form),
   })
     .then((response) => response.ok ? successfulSubmitOffer(response) : failedSubmitOffer(response))
-
     .catch((response) => failedSubmitOffer(response));
 }
-
 
 function failedSubmitOffer(response) {
   // eslint-disable-next-line no-console
   console.log(response);
-  // eslint-disable-next-line no-alert
   generatePopUp(false);
 }
 
-function successfulSubmitOffer(response) {
-  // eslint-disable-next-line no-console
-  //console.log(response);
+function successfulSubmitOffer() {
   generatePopUp(true);
-  // eslint-disable-next-line no-alert
-  //alert('Данные формы отправлены успешно');
 }
