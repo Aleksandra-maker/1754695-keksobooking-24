@@ -286,7 +286,7 @@ export function validateForm() {
   form.addEventListener('submit', fullFormValidation);
 }
 
-function drawSuggested() {
+export function drawSuggested() {
   const posts = getFilteredSuggestions();
   drawPins(posts);
 }

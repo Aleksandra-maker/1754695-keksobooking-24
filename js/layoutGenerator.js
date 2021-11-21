@@ -1,3 +1,4 @@
+import { drawSuggested } from './formController.js';
 
 export function generateOfferCard(offerObject) {
   const templateCard = document.querySelector('#card').content.querySelector('.popup');
@@ -87,6 +88,9 @@ function closePopUp(event) {
     document.removeEventListener('click',closePopUp, false);
     if (document.querySelector('.success')) {
       document.querySelector('.success').remove();
+      document.querySelector('.ad-form').reset();
+      document.querySelector('.map__filters').reset();
+      drawSuggested();
     } else {
       document.querySelector('.error').remove();
     }
